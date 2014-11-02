@@ -1,10 +1,53 @@
 var Bolty = require('../');
-var assert = require('assert');
+require('chai').should();
 
-describe('System events testing', function() {
+describe('General structural', function() {
 
-  it('should say hello', function() {
-    assert.ok(true);
+  it('should export a function', function() {
+    (typeof Bolty).should.be.equal('function');
+  });
+
+  it('should have #encode, #decode, #plugin and #schema', function(){
+    var bolty = new Bolty({
+      name: 'testing',
+      fields: {}
+    });
+
+    bolty.should.have.property('encode');
+    bolty.should.have.property('decode');
+    bolty.should.have.property('plugin');
+    bolty.should.have.property('schema');
+  });
+
+  it('should add encoder and decoder when plugged in', function(){
+    var bolty = new Bolty({
+      name: 'testing',
+      fields: {}
+    });
+
+    bolty.plugin({
+      name: 'testing',
+      encoder: function(){},
+      decoder: function(){}
+    });
+
+    bolty._decoders.should.have.property('testing');
+    bolty._encoders.should.have.property('testing');
+  });
+
+  it('should add aditional schema', function(){
+    var bolty = new Bolty({
+      name: 'testing',
+      fields: {}
+    });
+
+    bolty.schema({
+      name: 'testing2',
+      encoder: function(){},
+      decoder: function(){}
+    });
+
+    bolty._schemas.should.have.property('testing2');
   });
 
 
