@@ -23,7 +23,6 @@ describe('Encoding and decoding testing', function() {
   });
 
   it('should manage uint16be', function() {
-    console.log(encoders.uint16be(320));
     decoders.uint16be(encoders.uint16be(320))
       .should.be.equal(320);
   });
