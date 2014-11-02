@@ -1,5 +1,4 @@
 var Bolty = require('..');
-var msgpack = require('msgpack');
 var hello = new Bolty({
   name: 'hello',
   fields: {
@@ -30,9 +29,5 @@ var json = {
   timestamp: new Date().getTime()
 };
 
-console.log('Bolty buffer');
-console.log(buff);
-
 console.log('Bolty size: %s', buff.length);
 console.log('JSON size: %s', JSON.stringify(json).length);
-console.log('MSGPACK size:', msgpack.pack(json).length);
