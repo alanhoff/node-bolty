@@ -3,15 +3,15 @@ var hello = new Bolty({
   name: 'hello',
   fields: {
     hello: {
-      id: 66661,
+      id: 1,
       type: 'string'
     },
     birthday: {
-      id: 66662,
+      id: 2,
       type: 'uint32le'
     },
     timestamp: {
-      id: 66663,
+      id: 3,
       type: 'varint'
     }
   }
