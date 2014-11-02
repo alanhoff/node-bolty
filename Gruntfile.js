@@ -13,6 +13,15 @@ module.exports = function(grunt) {
         ],
       },
 
+      // Run JSDOC
+      doc: {
+        args: [
+          './node_modules/jsdoc-to-markdown/bin/cli.js',
+          './lib/**/*.js',
+          './.jsdocrc'
+        ],
+      },
+
       // Look for JavaScript errors
       hint: {
         args: [
@@ -45,16 +54,36 @@ module.exports = function(grunt) {
         exec: 'cat ./coverage/lcov.info | ' +
           './node_modules/coveralls/bin/coveralls.js'
       }
+    },
+    jsdoc2md: {
+      api: {
+        src: './lib//bolty.js',
+        dest: './docs/api.md'
+      },
+      encoders: {
+        src: './lib//encoders.js',
+        dest: './docs/encoders.md'
+      },
+      decoders: {
+        src: './lib//decoders.js',
+        dest: './docs/decoders.md'
+      }
     }
   });
 
   // Loading NPM Grunt plugins
   grunt.loadNpmTasks('grunt-run');
+  grunt.loadNpmTasks('grunt-jsdoc-to-markdown');
 
   // Registering custom named tasks for easy access
   grunt.registerTask('test', [
     'run:hint',
     'run:mocha'
+  ]);
+
+  // Registering custom named tasks for easy access
+  grunt.registerTask('doc', [
+    'jsdoc2md'
   ]);
 
   // This is the command that Travis will run

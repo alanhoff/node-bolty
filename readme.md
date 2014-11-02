@@ -1,6 +1,6 @@
 ### Bolty
 
-Binary object serialization. Inpired by Procotol Buffers."
+Binary object serialization. Inpired by Procotol Buffers.
 
 ### License
 
