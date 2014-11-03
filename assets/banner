@@ -1,0 +1,5 @@
+/*
+ Bolty v<%= pkg.version %> generated at <%= grunt.template.today("yyyy/mm/d HH:mm:ss") %>
+ Please report issues to <%= pkg.bugs.url %>
+ ISC License
+ */

@@ -1,0 +1,27 @@
+{
+  "name": "bolty",
+  "version": "1.0.0",
+  "homepage": "https://github.com/alanhoff/node-bolty",
+  "authors": [
+    "Alan Hoffmeister <alanhoffmeister@gmail.com>"
+  ],
+  "description": "Binary object serialization. Inspired by Procotol Buffers.",
+  "main": [
+    "./dist/bolty-bundle.js",
+    "./dist/bolty-bundle.min.js",
+    "./dist/bolty.js",
+    "./dist/bolty.min.js"
+  ],
+  "keywords": [
+    "serialization",
+    "protobuf",
+    "binary"
+  ],
+  "license": "ISC",
+  "ignore": [
+    "**/*",
+    "!license"
+    "!dist"
+    "!bower.json"
+  ]
+}
