@@ -1,0 +1,15 @@
+{
+  "name": "bolty-benchmark",
+  "version": "1.0.0",
+  "description": "Benchmark suite for Bolty",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alan Hoffmeister <alanhoffmeister@gmail.com>",
+  "license": "ISC",
+  "private": true,
+  "devDependencies": {
+    "benchmark": "^1.0.0"
+  }
+}

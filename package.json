@@ -1,7 +1,7 @@
 {
   "name": "bolty",
   "version": "1.0.0",
-  "description": "Binary object serialization. Inpired by Procotol Buffers.",
+  "description": "Binary object serialization. Inspired by Procotol Buffers.",
   "main": "./lib/bolty.js",
   "directories": {
     "test": "test"
@@ -34,7 +34,6 @@
     "chai": "^1.9.2",
     "coveralls": "^2.11.2",
     "grunt": "^0.4.5",
-    "grunt-cli": "^0.1.13",
     "grunt-jsdoc-to-markdown": "^0.4.2",
     "grunt-run": "^0.2.4",
     "istanbul": "^0.3.2",

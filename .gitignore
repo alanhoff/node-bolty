@@ -1,3 +1,4 @@
 node_modules/
+benchmark/node_modules/
 coverage/
 npm-debug.log

@@ -25,6 +25,8 @@ current Bolty instance being used. All encoders must return a buffer.
   * [encoders.doublebe(value)](#module_encoders.doublebe)
   * [encoders.varint(value)](#module_encoders.varint)
   * [encoders.buffer(buffer)](#module_encoders.buffer)
+  * [encoders.date(date)](#module_encoders.date)
+  * [encoders.boolean(date)](#module_encoders.boolean)
   * [encoders.schema(obj, field, prev)](#module_encoders.schema)
 
 <a name="module_encoders.string"></a>
@@ -54,7 +56,7 @@ little-endian. Specify `uint16le` as the field type to use this.
 
 **Params**
 
-- value `value` - The 16 bits number.  
+- value `number` - The 16 bits number.  
 
 **Returns**: `buffer` - The number encoded as a 2 bytes buffer  
 <a name="module_encoders.uint16be"></a>
@@ -64,7 +66,7 @@ big-endian. Specify `uint16be` as the field type to use this.
 
 **Params**
 
-- value `value` - The 16 bits number.  
+- value `number` - The 16 bits number.  
 
 **Returns**: `buffer` - The number encoded as a 2 bytes buffer  
 <a name="module_encoders.uint32le"></a>
@@ -74,7 +76,7 @@ little-endian. Specify `uint32le` as the field type to use this.
 
 **Params**
 
-- value `value` - The 32 bits number.  
+- value `number` - The 32 bits number.  
 
 **Returns**: `buffer` - The number encoded as a 4 bytes buffer  
 <a name="module_encoders.uint32be"></a>
@@ -84,7 +86,7 @@ big-endian. Specify `uint32be` as the field type to use this.
 
 **Params**
 
-- value `value` - The 32 bits number.  
+- value `number` - The 32 bits number.  
 
 **Returns**: `buffer` - The number encoded as a 4 bytes buffer  
 <a name="module_encoders.int8"></a>
@@ -104,7 +106,7 @@ little-endian. Specify `uint16le` as the field type to use this.
 
 **Params**
 
-- value `value` - The 16 bits number.  
+- value `number` - The 16 bits number.  
 
 **Returns**: `buffer` - The number encoded as a 2 bytes buffer  
 <a name="module_encoders.int16be"></a>
@@ -114,7 +116,7 @@ big-endian. Specify `uint16be` as the field type to use this.
 
 **Params**
 
-- value `value` - The 16 bits number.  
+- value `number` - The 16 bits number.  
 
 **Returns**: `buffer` - The number encoded as a 2 bytes buffer  
 <a name="module_encoders.int32le"></a>
@@ -124,7 +126,7 @@ little-endian. Specify `uint32le` as the field type to use this.
 
 **Params**
 
-- value `value` - The 32 bits number.  
+- value `number` - The 32 bits number.  
 
 **Returns**: `buffer` - The number encoded as a 4 bytes buffer  
 <a name="module_encoders.int32be"></a>
@@ -134,7 +136,7 @@ big-endian. Specify `uint32be` as the field type to use this.
 
 **Params**
 
-- value `value` - The 32 bits number.  
+- value `number` - The 32 bits number.  
 
 **Returns**: `buffer` - The number encoded as a 4 bytes buffer  
 <a name="module_encoders.floatle"></a>
@@ -144,7 +146,7 @@ little-endian. Specify `floatle` as the field type to use this.
 
 **Params**
 
-- value `value` - The 32 bits float.  
+- value `number` - The 32 bits float.  
 
 **Returns**: `buffer` - The number encoded as a 4 bytes buffer  
 <a name="module_encoders.floatbe"></a>
@@ -154,7 +156,7 @@ big-endian. Specify `floatbe` as the field type to use this.
 
 **Params**
 
-- value `value` - The 32 bits float.  
+- value `number` - The 32 bits float.  
 
 **Returns**: `buffer` - The float encoded as a 4 bytes buffer  
 <a name="module_encoders.doublele"></a>
@@ -164,7 +166,7 @@ little-endian. Specify `doublele` as the field type to use this.
 
 **Params**
 
-- value `value` - The 64 bits double.  
+- value `number` - The 64 bits double.  
 
 **Returns**: `buffer` - The double encoded as a 8 bytes buffer  
 <a name="module_encoders.doublebe"></a>
@@ -174,7 +176,7 @@ big-endian. Specify `doublebe` as the field type to use this.
 
 **Params**
 
-- value `value` - The 64 bits float.  
+- value `number` - The 64 bits float.  
 
 **Returns**: `buffer` - The double encoded as a 8 bytes buffer  
 <a name="module_encoders.varint"></a>
@@ -184,7 +186,7 @@ field type to use this.
 
 **Params**
 
-- value `value` - The number.  
+- value `number` - The number.  
 
 **Returns**: `buffer` - A buffer representing the base 128 varint  
 <a name="module_encoders.buffer"></a>
@@ -195,9 +197,27 @@ to use this.
 
 **Params**
 
-- buffer `value` - The buffer  
+- buffer `buffer` - The buffer  
 
 **Returns**: `buffer` - A copy of the buffer  
+<a name="module_encoders.date"></a>
+##encoders.date(date)
+Convert a `Date` object to number and to a varint.
+
+**Params**
+
+- date `date` - The date to be encoded  
+
+**Returns**: `buffer` - A buffer from the date  
+<a name="module_encoders.boolean"></a>
+##encoders.boolean(date)
+Convert a `Boolean` to a buffer.
+
+**Params**
+
+- date `date` - The date to be encoded  
+
+**Returns**: `buffer` - A buffer from the date  
 <a name="module_encoders.schema"></a>
 ##encoders.schema(obj, field, prev)
 Support for subschemas inside your object, this way we can have complex

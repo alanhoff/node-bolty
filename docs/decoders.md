@@ -26,6 +26,8 @@ decoded value.
   * [decoders.doublebe(buff)](#module_decoders.doublebe)
   * [decoders.varint(buff)](#module_decoders.varint)
   * [decoders.buffer(buffer)](#module_decoders.buffer)
+  * [decoders.date(buffer)](#module_decoders.date)
+  * [decoders.boolean(date)](#module_decoders.boolean)
   * [decoders.schema(buffer, field, prev)](#module_decoders.schema)
 
 <a name="module_decoders.string"></a>
@@ -199,6 +201,24 @@ to use this.
 - buffer `buffer` - A buffer.  
 
 **Returns**: `number` - A copy of the same buffer.  
+<a name="module_decoders.date"></a>
+##decoders.date(buffer)
+Convert a buffer to a `Date` object.
+
+**Params**
+
+- buffer `buffer` - A buffer.  
+
+**Returns**: `number` - A `Date` object.  
+<a name="module_decoders.boolean"></a>
+##decoders.boolean(date)
+Convert a  buffer to a `Boolean`.
+
+**Params**
+
+- date `date` - The date to be encoded  
+
+**Returns**: `buffer` - A buffer from the date  
 <a name="module_decoders.schema"></a>
 ##decoders.schema(buffer, field, prev)
 Support for subschemas inside your object, this way we can have complex

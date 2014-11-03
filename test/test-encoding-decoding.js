@@ -1,16 +1,14 @@
 var encoders = require('../lib/encoders');
 var decoders = require('../lib/decoders');
+var Bolty = require('..');
 require('chai').should();
 
 describe('Encoding and decoding testing', function() {
-  //strings
+
   it('should manage string', function() {
     decoders.string(encoders.string('hello'))
       .should.be.equal('hello');
   });
-
-
-  //unsigned
 
   it('should manage uint8', function() {
     decoders.uint8(encoders.uint8(3))
@@ -23,7 +21,6 @@ describe('Encoding and decoding testing', function() {
   });
 
   it('should manage uint16be', function() {
-    console.log(encoders.uint16be(320));
     decoders.uint16be(encoders.uint16be(320))
       .should.be.equal(320);
   });
@@ -38,7 +35,6 @@ describe('Encoding and decoding testing', function() {
       .should.be.equal(61000);
   });
 
-  //signed
   it('should manage int8', function() {
     decoders.int8(encoders.int8(3))
       .should.be.equal(3);
@@ -66,26 +62,77 @@ describe('Encoding and decoding testing', function() {
 
   it('should manage floatle', function() {
     decoders.floatle(encoders.floatle(0.2)).toFixed(1)
-      .should.be.equal(0.2);
+      .should.be.equal('0.2');
   });
 
   it('should manage floatbe', function() {
     decoders.floatbe(encoders.floatbe(0.5)).toFixed(1)
-      .should.be.equal(0.5);
+      .should.be.equal('0.5');
   });
 
   it('should manage doublele', function() {
-    decoders.floatle(encoders.doublele(0.120))
+    decoders.doublele(encoders.doublele(0.120))
       .should.be.equal(0.120);
   });
 
   it('should manage doublebe', function() {
-    decoders.floatbe(encoders.doublebe(0.200))
+    decoders.doublebe(encoders.doublebe(0.200))
       .should.be.equal(0.200);
   });
 
+  it('should manage buffer', function(){
+    decoders.buffer(encoders.buffer(new Buffer('Hello'))).toString()
+      .should.be.equal('Hello');
+  });
 
+  it('should manage boolean', function(){
+    decoders.boolean(encoders.boolean(false)).toString()
+      .should.be.equal('false');
+  });
 
+  it('should manage date', function(){
+    var date = new Date();
 
+    decoders.date(encoders.date(date)).getTime()
+      .should.be.equal(date.getTime());
+  });
 
+  it('should manage subschemas', function(){
+
+    var template = new Bolty({
+      name: 'parent',
+      fields: {
+        name: {
+          id: 1,
+          type: 'schema',
+          schema: 'child'
+        }
+      }
+    });
+
+    template.schema({
+      name: 'child',
+      fields: {
+        first: {
+          id: 1,
+          type: 'string'
+        },
+        last: {
+          id: 2,
+          type: 'string'
+        }
+      }
+    });
+
+    var person = template.decode(template.encode({
+      name: {
+        first: 'Alan',
+        last: 'Hoffmeister'
+      }
+    }));
+
+    person.name.first.should.be.equal('Alan');
+    person.name.last.should.be.equal('Hoffmeister');
+
+  });
 });
