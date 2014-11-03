@@ -87,10 +87,10 @@ OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
 TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 THIS SOFTWARE.
 
-0: https://developers.google.com/protocol-buffers/
-1: /docs/api.md
-2: /doc/encoders.md
-3: /examples
-4: https://github.com/alanhoff/node-bolty/issues?q=is%3Aopen+is%3Aenchancement+is%3Abug
-5: /contributors.md
-6: http://gruntjs.com/
+[0]: https://developers.google.com/protocol-buffers/
+[1]: /docs/api.md
+[2]: /doc/encoders.md
+[3]: /examples
+[4]: https://github.com/alanhoff/node-bolty/issues?q=is%3Aopen+is%3Aenchancement+is%3Abug
+[5]: /contributors.md
+[6]: http://gruntjs.com/
