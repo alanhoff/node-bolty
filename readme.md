@@ -89,7 +89,7 @@ THIS SOFTWARE.
 
 [0]: https://developers.google.com/protocol-buffers/
 [1]: docs/api.md
-[2]: doc/encoders.md
+[2]: docs/encoders.md
 [3]: examples
 [4]: https://github.com/alanhoff/node-bolty/issues?q=is%3Aopen+is%3Aenchancement+is%3Abug
 [5]: contributors.md
