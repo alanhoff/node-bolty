@@ -9,7 +9,7 @@ module.exports = function(grunt) {
       default: {
         options: {
           position: 'top',
-          banner: grunt.file.read('./assets/banner'),
+          banner: grunt.file.read(__dirname + '/assets/banner'),
           linebreak: true
         },
         files: {
