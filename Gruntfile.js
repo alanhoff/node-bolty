@@ -1,5 +1,23 @@
 module.exports = function(grunt) {
+
   grunt.initConfig({
+    // Load this module info
+    pkg: grunt.file.readJSON('package.json'),
+
+    // Add banner to the JS scripts
+    usebanner: {
+      default: {
+        options: {
+          position: 'top',
+          banner: grunt.file.read('./assets/banner'),
+          linebreak: true
+        },
+        files: {
+          src: './dist/**/*.js'
+        }
+      }
+    },
+
     run: {
 
       // Run all the tests inside the test folder
@@ -10,6 +28,15 @@ module.exports = function(grunt) {
           '--reporter',
           'spec',
           '--bail'
+        ],
+      },
+
+      // Run all the tests inside the test folder
+      karma: {
+        args: [
+          './node_modules/karma/bin/karma',
+          'start',
+          './.karma.conf.js'
         ],
       },
 
@@ -68,17 +95,41 @@ module.exports = function(grunt) {
         src: './lib//decoders.js',
         dest: './docs/decoders.md'
       }
+    },
+    browserify: {
+      bundle: {
+        files: {
+          './dist/bolty-bundle.js': './lib/bolty.js',
+        }
+      },
+      'no-buffer': {
+        files: {
+          './dist/bolty.js': './lib/bolty.js',
+        },
+        options: {
+          external: ['buffer']
+        }
+      }
+    },
+    uglify: {
+      bundle: {
+        files: {
+          './dist/bolty-bundle.min.js': './dist/bolty-bundle.js'
+        }
+      },
+      'no-buffer': {
+        files: {
+          './dist/bolty.min.js': './dist/bolty.js'
+        }
+      }
     }
   });
-
-  // Loading NPM Grunt plugins
-  grunt.loadNpmTasks('grunt-run');
-  grunt.loadNpmTasks('grunt-jsdoc-to-markdown');
 
   // Registering custom named tasks for easy access
   grunt.registerTask('test', [
     'run:hint',
-    'run:mocha'
+    'run:mocha',
+    'run:karma'
   ]);
 
   // Registering custom named tasks for easy access
@@ -92,4 +143,18 @@ module.exports = function(grunt) {
     'run:istanbul',
     'run:coveralls'
   ]);
+
+  // Build scripts for the browser
+  grunt.registerTask('build', [
+    'browserify',
+    'uglify',
+    'usebanner'
+  ]);
+
+  // Loading NPM Grunt plugins
+  grunt.loadNpmTasks('grunt-run');
+  grunt.loadNpmTasks('grunt-jsdoc-to-markdown');
+  grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-banner');
 };
