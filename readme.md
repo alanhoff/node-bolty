@@ -4,10 +4,10 @@
 [![Dependencies Status](https://david-dm.org/alanhoff/node-bolty.png)](https://david-dm.org/alanhoff/node-bolty)
 [![DevDependencies Status](https://david-dm.org/alanhoff/node-bolty/dev-status.png)](https://davhttps://developers.google.com/protocol-buffers/id-dm.org/alanhoff/node-bolty)
 
-Bolty is a binary object serializator. Heavilly inspired by [Protocol Buffer][0],
-it was designed to handle binary data and generate a package much smaller than
-JSON serialized objects, sometimes Bolty can generate a serialized object
-~70% smallers then the same object serialized with JSON.
+Bolty is a binary object encoder and decoder. Heavilly inspired by
+[Protocol Buffer][0], it was designed to handle binary data and generate a
+serialization much smaller than JSON objects. Sometimes Bolty can generate a
+serialized object ~70% smallers then the same object serialized with JSON.
 
 * [Read the API documentation][1]
 * [See the datatypes that Bolty can handle][2]
@@ -24,10 +24,10 @@ This is how you encode a JavaScript object:
 var Bolty = require('bolty');
 var schema = {
   name: 'testing-template', // The name of this template
-  fields: { // Here we need to list all fields that we wan't to encode
-    time: { // We will be expeting a key called time
-      id: 1,       // This id must be unique inside the fields
-      type: 'data' // Bolty should parse and decode this field as a date
+  fields: {                 // Here we need to list all fields that we wan't to encode
+    time: {                 // We will be expeting a key called time
+      id: 1,                // This id must be unique inside the fields
+      type: 'date'          // Bolty should parse and decode this field as a date
     }
   }
 };
