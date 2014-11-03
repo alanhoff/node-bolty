@@ -24,7 +24,7 @@ This is how you encode a JavaScript object:
 var Bolty = require('bolty');
 var schema = {
   name: 'testing-template', // The name of this template
-  fields: {                 // Here we need to list all fields that we wan't to encode
+  fields: {                 // Here we need to list all fields that we want to encode
     time: {                 // We will be expeting a key called time
       id: 1,                // This id must be unique inside the fields
       type: 'date'          // Bolty should parse and decode this field as a date
@@ -88,9 +88,9 @@ TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 THIS SOFTWARE.
 
 [0]: https://developers.google.com/protocol-buffers/
-[1]: /docs/api.md
-[2]: /doc/encoders.md
-[3]: /examples
+[1]: docs/api.md
+[2]: doc/encoders.md
+[3]: examples
 [4]: https://github.com/alanhoff/node-bolty/issues?q=is%3Aopen+is%3Aenchancement+is%3Abug
-[5]: /contributors.md
+[5]: contributors.md
 [6]: http://gruntjs.com/
