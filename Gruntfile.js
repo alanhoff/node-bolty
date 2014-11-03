@@ -140,6 +140,7 @@ module.exports = function(grunt) {
   // This is the command that Travis will run
   grunt.registerTask('travis', [
     'run:hint',
+    'run:karma',
     'run:istanbul',
     'run:coveralls'
   ]);
