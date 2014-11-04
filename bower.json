@@ -14,14 +14,16 @@
   ],
   "keywords": [
     "serialization",
+    "encoding",
+    "decoding",
     "protobuf",
     "binary"
   ],
   "license": "ISC",
   "ignore": [
     "**/*",
-    "!license"
-    "!dist"
+    "!license",
+    "!dist",
     "!bower.json"
   ]
 }

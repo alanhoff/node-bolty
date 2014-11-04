@@ -4,6 +4,8 @@
 [![Dependencies Status](https://david-dm.org/alanhoff/node-bolty.png)](https://david-dm.org/alanhoff/node-bolty)
 [![DevDependencies Status](https://david-dm.org/alanhoff/node-bolty/dev-status.png)](https://davhttps://developers.google.com/protocol-buffers/id-dm.org/alanhoff/node-bolty)
 
+[![Testling Status](https://ci.testling.com/alanhoff/node-bolty.png)](https://ci.testling.com/alanhoff/node-bolty)
+
 Bolty is a binary object encoder and decoder. Heavelly inspired by
 [Protocol Buffers][0], it was designed to handle binary data and generate a
 serialization much smaller than JSON objects. Sometimes Bolty can generate a
