@@ -6,7 +6,7 @@
 
 [![Testling Status](https://ci.testling.com/alanhoff/node-bolty.png)](https://ci.testling.com/alanhoff/node-bolty)
 
-Bolty is a binary object encoder and decoder. Heavelly inspired by
+Bolty is a binary object encoder and decoder. Heavily inspired by
 [Protocol Buffers][0], it was designed to handle binary data and generate a
 serialization much smaller than JSON objects. Sometimes Bolty can generate a
 serialized object ~70% smallers then the same object serialized with JSON.
@@ -18,10 +18,10 @@ serialized object ~70% smallers then the same object serialized with JSON.
 ### The basics
 
 Bolty works with an object schema, this way we don't need to include the keys
-with the serialized object. Also it handle numbers as integers inside a buffer,
-not as a string, like JSON does.
+inside the serialized buffer. Also it handles numbers as integers inside a
+buffer, not as a string, like JSON does. This is how you encode a JavaScript
+to a binary buffer:
 
-This is how you encode a JavaScript object:
 ```javascript
 var Bolty = require('bolty');
 var schema = {
@@ -42,10 +42,11 @@ var buff = template.encode({
 
 var obj = template.decode(buff);
 
-// will output
-// {
-//   time: Date(Tue Nov 04 2014 10:21:02 GMT-0200)
-// }
+/*
+ { time: Date(Tue Nov 04 2014 10:21:02 GMT-0200)
+   awesome: true,
+   luckyNumber: 8080 }
+*/
 ```
 
 The generated binary buffer looks like this: `<Buffer 00 06 f6 a8 9b d8 97 29 01 01 31 02 02 90 1f>`,
@@ -79,7 +80,7 @@ example:
 ### Custom encoders and decoders
 
 You can create custom encoders and decoders to serialize and deserialize your
-objects. In this exame we will create a custom plugin to encode and decode
+objects. In this example we will create a custom plugin to encode and decode
 ObjectIDs from MongoDB.
 
 ```javascript
@@ -93,9 +94,11 @@ ObjectIDs from MongoDB.
  template.plugin({
    name: 'objectid' // must be the same as the type
    encoder: function(value){
+     // Encoders always reveive a value and must return a buffer
      return new Buffer(value.toString(), 'hex');
    },
    decoder: function(buff){
+     // Decoders always receive buffers and must return a value
      return new ObjectID(buff.toString('hex'));
    }
  });
@@ -136,7 +139,7 @@ template.encode({
 ### Contribute
 
 To contribute you can try to find an [issue or enchancment][4] and try to
-implement it, fork the project, implement the code, make tests, add yourself
+implement it. Fork the project, implement the code, make tests, add yourself
 to the [contributors][5] list and send the PR to the master branch.
 
 ### Testing
