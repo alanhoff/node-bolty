@@ -122,7 +122,7 @@ var template = new Bolty({
 // Add that subschema
 template.schema('info', {
   street: 'string',
-  number: 'varing'
+  number: 'varint'
 });
 
 // Now you can encode your nested object
