@@ -38,16 +38,15 @@ describe('General structural', function() {
   it('should add aditional schema', function(){
     var bolty = new Bolty({
       name: 'testing',
-      fields: {}
+      surname: 'testing'
     });
 
-    bolty.schema({
-      name: 'testing2',
-      encoder: function(){},
-      decoder: function(){}
+    bolty.schema('testing', {
+      name: 'string',
+      surname: 'string'
     });
 
-    bolty._schemas.should.have.property('testing2');
+    bolty._schemas.should.have.property('testing');
   });
 
 

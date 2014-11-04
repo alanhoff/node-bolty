@@ -25,13 +25,9 @@ This is how you encode a JavaScript object:
 ```javascript
 var Bolty = require('bolty');
 var schema = {
-  name: 'testing-template', // The name of this template
-  fields: {                 // Here we need to list all fields that we want to encode
-    time: {                 // We will be expeting a key called time
-      id: 1,                // This id must be unique inside the fields
-      type: 'date'          // Bolty should parse and decode this field as a date
-    }
-  }
+  time: 'date',           // The time field will be encoded as a Date object
+  awesome: 'boolean',     // A simple boolean
+  luckyNumber: 'uint16le' // A 16 bits unsigned integer ordered as litte-endian
 };
 
 // Now we will create the template
@@ -39,19 +35,37 @@ var template = new Bolty(schema);
 
 // That's it, our template is ready to encode and decode
 var buff = template.encode({
-  time: new Date()
+  time: new Date(),
+  awesome: true,
+  luckyNumber: 8080
 });
 
 var obj = template.decode(buff);
+
+// will output
+// {
+//   time: Date(Tue Nov 04 2014 10:21:02 GMT-0200)
+// }
 ```
 
-The generated binary buffer looks like this: `<Buffer 01 06 e6 f9 ea 9a 97 29>`,
-only 8 bytes, against 35 bytes of the same object serialized with JSON.
+The generated binary buffer looks like this: `<Buffer 00 06 f6 a8 9b d8 97 29 01 01 31 02 02 90 1f>`,
+only 15 bytes, against 69 bytes of the same object serialized with JSON.
+
+### In the browser
+
+You can install Bolty with `bower install bolty` and then use it inside
+your scripts.
+
+```html
+<script src="dist/bolty-bundle.min.js"></script>
+<!-- Or if you already have Buffer included your page -->
+<script src="dist/bolty.min.js"></script>
+```
 
 ### The protocol
 
 The protocol is very simple, it consists on 3 parts, one id as varint, one
-length as varint too and the data itself. Let's take a look on the previous
+length as varint and the data itself. Let's take a look on the previous
 example:
 
 ```
@@ -59,7 +73,64 @@ example:
 | ----------- | ----------------- | ------------
 | ID          | 01                | The ID, so we know the key name from the schema
 | Data length | 06                | The length of the data, so we know when  data ends and another field starts
-| The data    | e6 f9 ea 9a 97 29 | The data itself
+| The data    | a8 9b d8 97 29 01 | The data itself from the first key
+```
+
+### Custom encoders and decoders
+
+You can create custom encoders and decoders to serialize and deserialize your
+objects. In this exame we will create a custom plugin to encode and decode
+ObjectIDs from MongoDB.
+
+```javascript
+ var ObjectID = require('mongodb').ObjectID
+ var Bolty = require('bolty');
+ var template = new Bolty({
+   _id: 'objectid'
+ });
+
+ // Now plug the custom encoder/decoder
+ template.plugin({
+   name: 'objectid' // must be the same as the type
+   encoder: function(value){
+     return new Buffer(value.toString(), 'hex');
+   },
+   decoder: function(buff){
+     return new ObjectID(buff.toString('hex'));
+   }
+ });
+```
+
+### Subschema for nested objects
+
+Bolty support nested objects by adding subtemplates:
+
+```javascript
+// Create a template that depends on a subschema
+var template = new Bolty({
+  name: 'string',
+  surname: 'string',
+  info: {
+    type: 'schema',
+    schema: 'info'
+  }
+});
+
+// Add that subschema
+template.schema('info', {
+  street: 'string',
+  number: 'varing'
+});
+
+// Now you can encode your nested object
+template.encode({
+  name: 'John',
+  surname: 'Doe',
+  info: {
+    street: '1st Avenue',
+    number: 8080
+  }
+});
 ```
 
 ### Contribute

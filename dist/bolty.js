@@ -1,5 +1,5 @@
 /*
- Bolty v1.0.0 generated at 2014/11/3 14:11:58
+ Bolty v1.0.0 generated at 2014/11/4 11:11:11
  Please report issues to https://github.com/alanhoff/node-bolty/issues
  ISC License
  */
@@ -18,27 +18,27 @@ var varint = require('varint');
  * ```javascript
  * var Bolty = require('bolty');
  * var schema = {
- *   name: 'mySchema',
- *   fields: {
- *     firstname: {
- *       id: 1,
- *       type: 'string'
- *     },
- *     surname: {
- *       id: 2,
- *       type: 'string'
- *     }
- *   }
+ *   name: 'string',
+ *   surname: 'string'
  * };
- * var myTemplate = new Bolty(schema);
+ * var template = new Bolty(schema);
  * ```
  */
 var Bolty = function(schema) {
-  this._schema = schema;
   this._decoders = decoders;
   this._encoders = encoders;
   this._schemas = {};
 
+  // Allow to pass the fields direclty
+  if(Object.keys(schema).join(',') !== 'name,fields'){
+    schema = {
+      name: '_auto-' + new Date().getTime(),
+      fields: schema
+    };
+  }
+
+  this._schema = schema;
+  this._fieldIndex = Object.keys(schema.fields);
   this._schemas[schema.name] = schema;
 };
 
@@ -48,7 +48,7 @@ var Bolty = function(schema) {
  * @return {object}        The object resulting from the decoding
  * @example
  * ```javascript
- * var user = myTemplate.decode(<Buffer 01 0c 48 65 6c 6c 6f 20 77 6f 72 ...>);
+ * var user = template.decode(<Buffer 01 0c 48 65 6c 6c 6f 20 77 6f 72 ...>);
  * console.log(user);
  * ```
  */
@@ -74,9 +74,10 @@ Bolty.prototype.decode = function(buffer) {
 
     for (var key in this._schema.fields) {
       var field = this._schema.fields[key];
+      var id = field.id || this._fieldIndex.indexOf(key);
 
-      if (field.id === data.id)
-        obj[key] = this._decoders[field.type]
+      if (id === data.id)
+        obj[key] = this._decoders[field.type || field]
         .apply(null, [data.data, field, this]);
     }
   }
@@ -90,7 +91,7 @@ Bolty.prototype.decode = function(buffer) {
  * @return {buffer}     the resulting buffer
  * @example
  * ```javascript
- * var buff = myTemplate.encode({
+ * var buff = template.encode({
  *   firname: 'Alan',
  *   surname: 'Hoffmeister'
  * });
@@ -98,15 +99,16 @@ Bolty.prototype.decode = function(buffer) {
  */
 Bolty.prototype.encode = function(obj) {
   var buffer = [];
+  var _id = 0;
 
   for (var key in obj) {
     var field = this._schema.fields[key];
 
     if (field) {
-      var value = this._encoders[field.type]
+      var value = this._encoders[field.type || field]
         .apply(null, [obj[key], field, this]);
 
-      var id = new Buffer(varint.encode(field.id));
+      var id = new Buffer(varint.encode(field.id || _id++));
       var length = new Buffer(varint.encode(value.length));
 
       buffer.push(Buffer.concat([id, length, value]));
@@ -125,18 +127,12 @@ Bolty.prototype.encode = function(obj) {
  * // We will create a plugin to handle MongoDB's ObjectID
  * var ObjectID = require('mongodb').ObjectID
  * var Bolty = require('bolty');
- * var mySchema = new Bolty({
- *   name: 'mongodb-testing',
- *   fileds: {
- *     _id: {
- *       id: 1,
- *       type: 'objectid'
- *     }
- *   }
+ * var template = new Bolty({
+ *   _id: 'objectid'
  * });
  *
  * // Now plug the custom encoder/decoder
- * mySchema.plugin({
+ * template.plugin({
  *   name: 'objectid' // must be the same as the type
  *   encoder: function(value){
  *     return new Buffer(value.toString(), 'hex');
@@ -154,26 +150,21 @@ Bolty.prototype.plugin = function(obj) {
 
 /**
  * Add an aditionar schema to your main schema, so you can have nested objects.
- * @param  {object} schema the aditional schema
+ * @param  {string} name   The name of the additional schema
+ * @param  {object} fields The fields of this aditional schema
  * @example
  * ```javascript
- * mySchema.schema({
- *   name: 'aditional-schema',
- *   fields: {
- *     street: {
- *       id: 1,
- *       type: 'string'
- *     },
- *     telephone: {
- *       ìd: 2,
- *       type: 'varint'
- *     }
- *   }
+ * template.schema('info', {
+ *   street: 'string',
+ *   telephone: 'varint'
  * });
  * ```
  */
-Bolty.prototype.schema = function(schema) {
-  this._schemas[schema.name] = schema;
+Bolty.prototype.schema = function(name, fields) {
+  this._schemas[name] = {
+    name: name,
+    fields: fields
+  };
 };
 
 module.exports = Bolty;

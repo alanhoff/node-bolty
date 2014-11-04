@@ -110,17 +110,14 @@ describe('Encoding and decoding testing', function() {
       }
     });
 
-    template.schema({
-      name: 'child',
-      fields: {
-        first: {
-          id: 1,
-          type: 'string'
-        },
-        last: {
-          id: 2,
-          type: 'string'
-        }
+    template.schema('child', {
+      first: {
+        id: 1,
+        type: 'string'
+      },
+      last: {
+        id: 2,
+        type: 'string'
       }
     });
 

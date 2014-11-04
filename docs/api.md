@@ -7,7 +7,7 @@
   * [bolty.decode(buffer)](#Bolty#decode)
   * [bolty.encode(obj)](#Bolty#encode)
   * [bolty.plugin(obj)](#Bolty#plugin)
-  * [bolty.schema(schema)](#Bolty#schema)
+  * [bolty.schema(name, fields)](#Bolty#schema)
 
 <a name="new_Bolty"></a>
 ##new Bolty(schema)
@@ -21,19 +21,10 @@ Bolty main class
 ```javascript
 var Bolty = require('bolty');
 var schema = {
-  name: 'mySchema',
-  fields: {
-    firstname: {
-      id: 1,
-      type: 'string'
-    },
-    surname: {
-      id: 2,
-      type: 'string'
-    }
-  }
+  name: 'string',
+  surname: 'string'
 };
-var myTemplate = new Bolty(schema);
+var template = new Bolty(schema);
 ```
 
 <a name="Bolty#decode"></a>
@@ -47,7 +38,7 @@ Decode an buffer serialized by Bolty
 **Returns**: `object` - The object resulting from the decoding  
 **Example**  
 ```javascript
-var user = myTemplate.decode(<Buffer 01 0c 48 65 6c 6c 6f 20 77 6f 72 ...>);
+var user = template.decode(<Buffer 01 0c 48 65 6c 6c 6f 20 77 6f 72 ...>);
 console.log(user);
 ```
 
@@ -62,7 +53,7 @@ Encode an object into a serialized buffer
 **Returns**: `buffer` - the resulting buffer  
 **Example**  
 ```javascript
-var buff = myTemplate.encode({
+var buff = template.encode({
   firname: 'Alan',
   surname: 'Hoffmeister'
 });
@@ -82,18 +73,12 @@ Add custom encoder/decoder to your schema
 // We will create a plugin to handle MongoDB's ObjectID
 var ObjectID = require('mongodb').ObjectID
 var Bolty = require('bolty');
-var mySchema = new Bolty({
-  name: 'mongodb-testing',
-  fileds: {
-    _id: {
-      id: 1,
-      type: 'objectid'
-    }
-  }
+var template = new Bolty({
+  _id: 'objectid'
 });
 
 // Now plug the custom encoder/decoder
-mySchema.plugin({
+template.plugin({
   name: 'objectid' // must be the same as the type
   encoder: function(value){
     return new Buffer(value.toString(), 'hex');
@@ -105,27 +90,19 @@ mySchema.plugin({
 ```
 
 <a name="Bolty#schema"></a>
-##bolty.schema(schema)
+##bolty.schema(name, fields)
 Add an aditionar schema to your main schema, so you can have nested objects.
 
 **Params**
 
-- schema `object` - the aditional schema  
+- name `string` - The name of the additional schema  
+- fields `object` - The fields of this aditional schema  
 
 **Example**  
 ```javascript
-mySchema.schema({
-  name: 'aditional-schema',
-  fields: {
-    street: {
-      id: 1,
-      type: 'string'
-    },
-    telephone: {
-      ìd: 2,
-      type: 'varint'
-    }
-  }
+template.schema('info', {
+  street: 'string',
+  telephone: 'varint'
 });
 ```
 

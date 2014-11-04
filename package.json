@@ -1,6 +1,6 @@
 {
   "name": "bolty",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Binary object serialization. Inspired by Procotol Buffers.",
   "main": "./lib/bolty.js",
   "directories": {
