@@ -1,5 +1,5 @@
 /*
- Bolty v1.0.0 generated at 2014/11/4 11:11:11
+ Bolty v2.0.0 generated at 2014/11/4 13:11:28
  Please report issues to https://github.com/alanhoff/node-bolty/issues
  ISC License
  */
@@ -13,7 +13,7 @@ var varint = require('varint');
 /**
  * Bolty main class
  * @class
- * @param {object} schema The main schemma with a name and fields.
+ * @param {object} schema The main schmma.
  * @example
  * ```javascript
  * var Bolty = require('bolty');
@@ -43,7 +43,7 @@ var Bolty = function(schema) {
 };
 
 /**
- * Decode an buffer serialized by Bolty
+ * Decode a buffer serialized by Bolty
  * @param  {buffer} buffer The buffer to be decoded into an object
  * @return {object}        The object resulting from the decoding
  * @example
@@ -88,7 +88,7 @@ Bolty.prototype.decode = function(buffer) {
 /**
  * Encode an object into a serialized buffer
  * @param  {object} obj The object to be serialized
- * @return {buffer}     the resulting buffer
+ * @return {buffer}     The resulting buffer
  * @example
  * ```javascript
  * var buff = template.encode({
@@ -149,7 +149,7 @@ Bolty.prototype.plugin = function(obj) {
 };
 
 /**
- * Add an aditionar schema to your main schema, so you can have nested objects.
+ * Add an additional schema to your main schema, so you can have nested objects.
  * @param  {string} name   The name of the additional schema
  * @param  {object} fields The fields of this aditional schema
  * @example
@@ -176,7 +176,7 @@ var varint = require('varint');
 
 /**
  * Here are all internal decoders supported by Bolty. They all
- * receive those parameters: `buff` as the buffer extracted from the serialized
+ * receive this parameters: `buff` as the buffer extracted from the serialized
  * buffer, `field` as the field configuration inside the schema and `schema`
  * as the current Bolty instance being used. All encoders must return the
  * decoded value.
@@ -185,7 +185,7 @@ var varint = require('varint');
  */
 
 /**
- * Decodes a buffer into a UTF8 string. Specify `string` as the field type
+ * Decodes a buffer into an UTF8 string. Specify `string` as the field type
  * to use this.
  *
  * @param  {buffer} buff The buffer to be decoded.
@@ -419,7 +419,7 @@ var varint = require('varint');
 
 /**
  * Here are all internal encoders supported by Bolty. They all
- * receive those parameters `value` as the value found on the encoded object,
+ * receive this parameters `value` as the value found on the encoded object,
  * `field`  as the field configuration inside the schema and `schema` as the
  * current Bolty instance being used. All encoders must return a buffer.
  *
